@@ -30,7 +30,7 @@ function setup() {
     let numBubbles = 10;
     let numBalls = 10;
     let numFlakes = 10;
-    createCanvas(1000, 1000);
+    createCanvas(500, 500);
     for (let i = 0; i < numBalls; i++) {
         balls[i] = new Ball(random(25, width - 25), random(25, height - 25), random(10, 50), getCol());
     }
@@ -40,12 +40,6 @@ function setup() {
     for (let i = 0; i < numFlakes; i++) {
         snowflakes[i] = new Snowflake(random(25, width - 25), random(25, height - 25), random(10, 50));
     }
-    /* TODO OPTIONAL - add a function mousePressed() that either stops or starts objects from moving
-       if the mouse is pressed while it is touching them. So you could use this (if careful!) to stop all of the
-       objects from moving then start them back up again. The Ball class has some helper functions that will
-       help you with this, but you'll need to add them to the other classes.
-    */
-
     // do not edit the below lines
 }
 function getCol(): string {
