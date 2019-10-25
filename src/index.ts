@@ -72,9 +72,8 @@ function draw() {
         snowflakes[s].draw();
         snowflakes[s].move();
     }
-
-    window.draw = draw;
-    window.setup = setup;
-    window.mousePressed = mousePressed;
-    window.mouseReleased = mouseReleased;
 }
+window.draw = draw;
+window.setup = setup;
+window.mousePressed = mousePressed;
+window.mouseReleased = mouseReleased;
