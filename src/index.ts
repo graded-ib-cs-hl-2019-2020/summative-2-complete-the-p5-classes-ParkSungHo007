@@ -34,8 +34,7 @@ function draw() {
         balls[i].draw();
         if (balls[i].touchingMouse() && mouseIsPressed && !balls[i].stopped) {
             balls[i].stop();
-        }
-        if (balls[i].touchingMouse() && mouseIsPressed && balls[i].stopped) {
+        } else if (balls[i].touchingMouse() && mouseIsPressed && balls[i].stopped) {
             balls[i].stopped = false;
             balls[i].move();
         } else { balls[i].move(); }
