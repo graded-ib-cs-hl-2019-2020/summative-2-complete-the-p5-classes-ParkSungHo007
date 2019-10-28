@@ -1,11 +1,11 @@
 
 export class Ball {
+  public stopped: boolean = false;
   private x: number;
   private y: number;
   private size: number;
   private xSpeed: number = random(-3, 3);
   private ySpeed: number = random(-3, 3);
-  private stopped: boolean = false;
   private color: string;
   private borderColor: string;
 

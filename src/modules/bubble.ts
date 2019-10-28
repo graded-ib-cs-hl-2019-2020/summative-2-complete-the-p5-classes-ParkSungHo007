@@ -6,17 +6,16 @@ export class Bubble {
     private xSpeed: number = random(-1.5, 1.5);
     private ySpeed: number = random(-1.5, 1.5);
     private stopped: boolean = false;
-    private color: string;
+    private color: string = "#ffffffcc"; // translucent bubbles
     private borderColor: string;
 
     /* TODO REQUIRED - What's missing here? Add it! */
     // tslint:disable-next-line: one-line;annoying problem solved
     // tslint:disable-next-line: max-line-length
-    constructor(x: number, y: number, size: number, color: string, borderColor: string) {
+    constructor(x: number, y: number, size: number, borderColor: string) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.color = color;
         this.borderColor = borderColor;
     }
 
