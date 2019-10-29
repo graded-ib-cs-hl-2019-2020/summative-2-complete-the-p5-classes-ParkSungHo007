@@ -1,21 +1,38 @@
 export class Rocket {
-    public position = createVector(width / 2, height);
-    public velocity = createVector(0, -1);
-    public acceleration = createVector();
 
-    public force(force: number): void {
-        this.acceleration.add(force);
+    public position = createVector(width / 2, height);
+
+    public velocity = createVector();
+    public acceleration = createVector();
+    private maxVel = 1;
+
+    public move(xPos: number, yPos: number): void {
+        this.acceleration.x = .05;
+        this.acceleration.y = 0;
+        let targetVector = createVector(xPos, yPos);
+        let vecBetween = targetVector.sub(this.position);
+        this.acceleration.rotate(vecBetween.heading());
+        if (this.velocity.mag() >= 2) {
+            this.position.add(this.velocity);
+        } else {
+            this.velocity.add(this.acceleration);
+            this.position.add(this.velocity);
+        }
     }
-    public move(): void {
-        this.velocity.add(this.acceleration);
-        this.position.add(this.velocity);
-        this.acceleration.mult(0);
+    public hit(xPos: number, yPos: number): boolean {
+        if (this.position.x == xPos && this.position.y == yPos) {
+            return true;
+        } else { return false; }
     }
     public draw(): void {
-        translate(this.position.x, this.position.y);
-        rotate(this.velocity.heading());
         rectMode(CENTER);
         rect(0, 0, 30, 5);
-        fill("black");
+        fill("red");
+    }
+    public getxpos() {
+        return this.position.x;
+    }
+    public getypos() {
+        return this.position.y;
     }
 }

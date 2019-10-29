@@ -8,7 +8,6 @@ export class Bubble {
     private stopped: boolean = false;
     private color: string = "#ffffffcc"; // translucent bubbles
     private borderColor: string;
-
     /* TODO REQUIRED - What's missing here? Add it! */
     // tslint:disable-next-line: one-line;annoying problem solved
     // tslint:disable-next-line: max-line-length
@@ -18,6 +17,8 @@ export class Bubble {
         this.size = size;
         this.borderColor = borderColor;
     }
+
+    public setCol(c: string) { this.color = c; }
 
     public getX(): number {
         return this.x;
