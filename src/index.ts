@@ -1,15 +1,21 @@
 import { Ball } from "./modules/ball.js";
 import { Bubble } from "./modules/bubble.js";
+import { Rocket } from "./modules/rocket.js";
 import { Snowflake } from "./modules/snowflakes.js";
+let rockets: Rocket[] = [];
 let balls: Ball[] = [];
 let snowflakes: Snowflake[] = [];
 let bubbles: Bubble[] = [];
 let clickedIndex = -1;
 function setup() {
+    let numRockets = 3;
     let numBubbles = 10;
     let numBalls = 10;
     let numFlakes = 10;
-    createCanvas(1000, 1000);
+    createCanvas(1000, 800);
+    for (let i = 0; i < rockets.length; i++) {
+        rockets[i] = new Rocket();
+    }
     for (let i = 0; i < numBalls; i++) {
         balls[i] = new Ball(random(25, width - 25), random(25, height - 25), random(10, 50), getCol());
     }
@@ -46,6 +52,10 @@ function draw() {
     for (let s = 0; s < snowflakes.length; s++) {
         snowflakes[s].draw();
         snowflakes[s].move();
+    }
+    for (let r = 0; r < rockets.length; r++) {
+        rockets[r].draw();
+        rockets[r].move();
     }
 }
 window.draw = draw;

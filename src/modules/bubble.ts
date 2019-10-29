@@ -19,6 +19,13 @@ export class Bubble {
         this.borderColor = borderColor;
     }
 
+    public getX(): number {
+        return this.x;
+    }
+    public getY() {
+        return this.y;
+    }
+
     public stop() {
         this.stopped = true;
     }
