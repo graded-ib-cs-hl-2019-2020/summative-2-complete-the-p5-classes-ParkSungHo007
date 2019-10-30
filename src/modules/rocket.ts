@@ -25,6 +25,8 @@ export class Rocket {
         } else { return false; }
     }
     public draw(): void {
+        translate(this.position.x, this.position.y);
+        rotate(this.velocity.heading());
         rectMode(CENTER);
         rect(0, 0, 30, 5);
         fill("red");
