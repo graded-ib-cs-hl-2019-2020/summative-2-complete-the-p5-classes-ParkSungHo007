@@ -47,7 +47,7 @@ function getCol(): string {// color id is 6 letters with # in front.
 function draw() {
     background("skyblue");
     for (let i = 0; i < particles.length; i++) {
-        particles[i].draw()
+        particles[i].draw();
         particles[i].explode(0);
     }
     for (let i = 0; i < balls.length; i++) {
