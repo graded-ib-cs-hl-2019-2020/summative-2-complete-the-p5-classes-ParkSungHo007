@@ -17,6 +17,10 @@ export class Ball {
     this.borderColor = borderColor;
   }
 
+  public getStop(): boolean {
+    return this.stopped;
+  }
+
   public getX(): number {
     return this.x;
   }

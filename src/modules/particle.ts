@@ -1,7 +1,7 @@
 export class Particle {
     private x: number;
     private y: number;
-    private size: number = 2.5;
+    private size: number = 25;
     private xSpeed: number;
     private ySpeed: number;
     private color: string = "orange";

@@ -7,16 +7,15 @@ export class Rocket {
     private maxVel = 1;
 
     public move(xPos: number, yPos: number): void {
-        this.acceleration.x = .05;
+        this.acceleration.x = .3;
         this.acceleration.y = 0;
         let targetVector = createVector(xPos, yPos);
         let vecBetween = targetVector.sub(this.position);
         this.acceleration.rotate(vecBetween.heading());
-        if (this.velocity.mag() >= 2) {
-            this.position.add(this.velocity);
-        } else {
-            this.velocity.add(this.acceleration);
-            this.position.add(this.velocity);
+        this.velocity.add(this.acceleration);
+        this.position.add(this.velocity);
+        if (this.velocity.mag() > 7) {
+            this.velocity.setMag(5);
         }
     }
     public hit(xPos: number, yPos: number): boolean {

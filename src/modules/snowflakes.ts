@@ -17,7 +17,9 @@ export class Snowflake {
     public stop() {
         this.stopped = true;
     }
-
+    public getStop(): boolean {
+        return this.stopped;
+    }
     public go() {
         this.stopped = false;
     }

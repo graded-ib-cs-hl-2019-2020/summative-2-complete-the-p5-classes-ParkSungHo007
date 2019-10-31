@@ -17,7 +17,15 @@ export class Bubble {
         this.size = size;
         this.borderColor = borderColor;
     }
-
+    public getStop(): boolean {
+        return this.stopped;
+    }
+    public getXspeed(): number {
+        return this.xSpeed;
+    }
+    public getYspeed(): number {
+        return this.ySpeed;
+    }
     public setCol(c: string) { this.color = c; }
 
     public getX(): number {
