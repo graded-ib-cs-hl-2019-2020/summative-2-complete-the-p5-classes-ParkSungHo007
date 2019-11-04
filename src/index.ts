@@ -2,9 +2,8 @@ import { Ball } from "./modules/ball.js";
 import { Bubble } from "./modules/bubble.js";
 import { Particle } from "./modules/particle.js";
 import { Rocket } from "./modules/rocket.js";
-import { Missile } from "./modules/smartmissile.js";
 import { Snowflake } from "./modules/snowflakes.js";
-let missiles: Missile[] = [];
+
 let rockets: Rocket[] = [];
 let particles: Particle[] = [];
 let balls: Ball[] = [];
@@ -15,13 +14,18 @@ let target: Bubble;
 let targetIndex: number;
 let missilestarget: Bubble;
 let stop: boolean = false;
+let rocket;
+
 function setup() {
+    console.log("in setup");
     let numMissiles = 1;
     let numRockets = 1;
     let numBubbles = 10;
     let numBalls = 10;
     let numFlakes = 10;
     let numParticle = 20;
+    Rocket.loadRocket();
+
     createCanvas(1500, 800);
     for (let i = 0; i < numRockets; i++) {
         rockets[i] = new Rocket();
@@ -38,8 +42,10 @@ function setup() {
     targetIndex = Math.floor(random(0, numBubbles));
     target = bubbles[targetIndex];
     target.setCol("red");
-    missilestarget = bubbles[Math.floor(random(0, numBubbles))];
+    target.setXspeed(4);
+    target.setYspeed(4);
 }
+
 function getCol(): string {// color id is 6 letters with # in front.
     // There are 16 letters possible for all the different possibilites 0 ~ 9 and A~ F
     let letters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];

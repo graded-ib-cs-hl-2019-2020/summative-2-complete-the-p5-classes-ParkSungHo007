@@ -26,6 +26,12 @@ export class Bubble {
     public getYspeed(): number {
         return this.ySpeed;
     }
+    public setXspeed(c: number): void {
+        this.xSpeed = c;
+    }
+    public setYspeed(c: number): void {
+        this.ySpeed = c;
+    }
     public setCol(c: string) { this.color = c; }
 
     public getX(): number {
