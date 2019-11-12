@@ -8,7 +8,6 @@ export class Bubble {
     private stopped: boolean = false;
     private color: string = "#ffffffcc"; // translucent bubbles
     private borderColor: string;
-    /* TODO REQUIRED - What's missing here? Add it! */
     // tslint:disable-next-line: one-line;annoying problem solved
     // tslint:disable-next-line: max-line-length
     constructor(x: number, y: number, size: number, borderColor: string) {
@@ -66,7 +65,6 @@ export class Bubble {
     public distFromMouse(): number {
         return dist(this.x, this.y, mouseX, mouseY);
     }
-
     /* This border behavior implements a wrap, so bubbles will flip over to the other side */
     private doBorderBehavior() {
         if (this.x < -this.size / 2) {

@@ -16,11 +16,9 @@ export class Ball {
     this.color = color;
     this.borderColor = borderColor;
   }
-
   public getStop(): boolean {
     return this.stopped;
   }
-
   public getX(): number {
     return this.x;
   }
@@ -39,17 +37,14 @@ export class Ball {
   public stop() {
     this.stopped = true;
   }
-
   public go() {
     this.stopped = false;
   }
-
   public draw(): void {
     fill(this.color);
     stroke(this.borderColor);
     ellipse(this.x, this.y, this.size);
   }
-
   public move(): void {
     if (!this.stopped) {
       this.x = this.xSpeed + this.x;
@@ -57,15 +52,12 @@ export class Ball {
       this.doBorderBehavior();
     }
   }
-
   public distFromMouse(): number {
     return dist(this.x, this.y, mouseX, mouseY);
   }
-
   public touchingMouse(): boolean {
     return this.distFromMouse() < this.size / 2;
   }
-
   /* This border behavior implements a bounce */
   private doBorderBehavior() {
     if (this.x < this.size / 2) {
@@ -83,5 +75,4 @@ export class Ball {
       this.y = height - this.size / 2;
     }
   }
-
 }
