@@ -1,4 +1,4 @@
-import { AAA } from "./modules/aaa.js";
+
 import { Ball } from "./modules/ball.js";
 import { Bubble } from "./modules/bubble.js";
 import { Particle } from "./modules/particle.js";
@@ -9,13 +9,13 @@ let particles: Particle[] = [];
 let balls: Ball[] = [];
 let snowflakes: Snowflake[] = [];
 let bubbles: Bubble[] = [];
-let aaa: AAA[] = [];
 let clickedIndex = -1;
 let target: Bubble;
 let targetIndex: number;
 let missilestarget: Bubble;
 let stop: boolean = false;
 let rocket;
+let audio = document.getElementById("gojaEffect") as HTMLAudioElement;
 
 function setup() {
     let aaaNum = 1;
@@ -28,9 +28,6 @@ function setup() {
     Rocket.loadRocket();
 
     createCanvas(1500, 800);
-    for (let i = 0; i < aaaNum; i++) {
-        aaa[i] = new AAA();
-    }
     for (let i = 0; i < numRockets; i++) {
         rockets[i] = new Rocket();
     }
@@ -66,7 +63,9 @@ function draw() {
         } else if (balls[i].touchingMouse() && mouseIsPressed && balls[i].stopped) {
             balls[i].stopped = false;
             balls[i].move();
-        } else { balls[i].move(); }
+        } else {
+            balls[i].move();
+        }
     }
     for (let c = 0; c < bubbles.length; c++) {
         bubbles[c].draw();
@@ -80,6 +79,7 @@ function draw() {
         rockets[r].draw();
         rockets[r].move(target.getX(), target.getY());
         if (dist(rockets[r].position.x, rockets[r].position.y, target.getX(), target.getY()) <= 40) {
+            audio.play();
             for (let i = 0; i < 20; i++) {
                 angleMode(DEGREES);
                 // tslint:disable-next-line: max-line-length
@@ -92,9 +92,6 @@ function draw() {
     for (let i = 0; i < particles.length; i++) {
         particles[i].draw();
         particles[i].explode(i);
-    }
-    for (let i = 0; i < aaa.length; i++) {
-        aaa[i].draw(rockets[i]);
     }
 }
 function mousePressed() {

@@ -59,7 +59,7 @@ export class Ball {
     return this.distFromMouse() < this.size / 2;
   }
   /* This border behavior implements a bounce */
-  private doBorderBehavior() {
+  public doBorderBehavior() {
     if (this.x < this.size / 2) {
       this.x = this.size / 2;
       this.xSpeed = -this.xSpeed;

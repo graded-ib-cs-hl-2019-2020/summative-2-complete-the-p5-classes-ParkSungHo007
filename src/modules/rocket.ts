@@ -31,7 +31,6 @@ export class Rocket {
     public draw(): void {
         translate(this.position.x, this.position.y);
         rotate(this.velocity.heading());
-
         image(Rocket.img, 0, 0, 60, 20);
     }
     public getxpos() {
