@@ -16,8 +16,14 @@ let missilestarget: Bubble;
 let stop: boolean = false;
 let rocket;
 let audio = document.getElementById("gojaEffect") as HTMLAudioElement;
+let no = 0;
 
+function preload() {
+    let img = loadImage("/images/korean-memez.jpg");
+    imageMode(CENTER);
+}
 function setup() {
+    tint(255, 150);
     let aaaNum = 1;
     let numMissiles = 1;
     let numRockets = 1;
@@ -55,6 +61,7 @@ function getCol(): string {// color id is 6 letters with # in front.
     return colSymbol;
 }
 function draw() {
+    imageMode(CENTER);
     background("skyblue");
     for (let i = 0; i < balls.length; i++) {
         balls[i].draw();
