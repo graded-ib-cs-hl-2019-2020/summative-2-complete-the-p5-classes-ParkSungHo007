@@ -20,7 +20,8 @@
       "type": "shell",
       "label": "tsc watch mode",
       "command": "tsc --watch",
-      "group": "build"
+      "group": "build",
+      "problemMatcher": []
     }
   ]
 }
