@@ -18,21 +18,13 @@ let rocket;
 let audio = document.getElementById("gojaEffect") as HTMLAudioElement;
 let no = 0;
 
-function preload() {
-    let img = loadImage("/images/korean-memez.jpg");
-    imageMode(CENTER);
-}
 function setup() {
-    tint(255, 150);
-    let aaaNum = 1;
-    let numMissiles = 1;
     let numRockets = 1;
     let numBubbles = 10;
     let numBalls = 10;
     let numFlakes = 10;
     let numParticle = 20;
     Rocket.loadRocket();
-
     createCanvas(1500, 800);
     for (let i = 0; i < numRockets; i++) {
         rockets[i] = new Rocket();
@@ -100,6 +92,15 @@ function draw() {
         particles[i].draw();
         particles[i].explode(i);
     }
+    eCol();
+}
+function eCol(): void {
+    for (let i = 0; i < balls.length; i++) {
+        for (let n = i + 1; n < balls.length; n++) {
+            balls[i].collison(balls[n]);
+        }
+    }
+
 }
 function mousePressed() {
     if (mouseIsPressed && !stop) {

@@ -10,7 +10,6 @@ export class Rocket {
     public position = createVector(width / 2, height);
     public velocity = createVector();
     public acceleration = createVector();
-    private maxVel = 1;
     public move(xPos: number, yPos: number): void {
         this.acceleration.x = .3;
         this.acceleration.y = 0;

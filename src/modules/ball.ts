@@ -1,6 +1,8 @@
+import { AUDIO } from "p5";
 
 export class Ball {
   public stopped: boolean = false;
+  public audio = document.getElementById("memez") as HTMLAudioElement;
   private x: number;
   private y: number;
   private size: number;
@@ -8,13 +10,24 @@ export class Ball {
   private ySpeed: number = random(-3, 3);
   private color: string;
   private borderColor: string;
-
   constructor(x: number, y: number, size: number, color = "red", borderColor = "black") {
     this.x = x;
     this.y = y;
     this.size = size;
     this.color = color;
     this.borderColor = borderColor;
+  }
+  public setXspeed(a: number): void {
+    this.xSpeed = a;
+  }
+  public setYspeed(a: number): void {
+    this.ySpeed = a;
+  }
+  public getXspeed(): number {
+    return this.xSpeed;
+  }
+  public getYspeed(): number {
+    return this.ySpeed;
   }
   public getStop(): boolean {
     return this.stopped;
@@ -52,6 +65,32 @@ export class Ball {
       this.doBorderBehavior();
     }
   }
+  public collison(ball: Ball): void {
+    let distance = dist(this.x, this.y, ball.getX(), ball.getY());
+    let combR = this.size / 2 + ball.size / 2; // distance between two balls if they are to collide
+    if (distance <= combR) {
+      let distanceBefore = dist(this.x - this.xSpeed, this.y - this.ySpeed, ball.x - ball.xSpeed, ball.y - ball.ySpeed);
+      let distanceChange = distanceBefore - distance;
+      let overlap = combR - distance;
+      let prop = overlap / distanceChange;
+      this.x = this.x - this.xSpeed * prop; // moves balls proportinally before collison
+      this.y = this.y - this.ySpeed * prop;
+      ball.x = ball.x - ball.getXspeed() * prop;
+      ball.y = ball.y - ball.getYspeed() * prop;
+      let vix = this.xSpeed;
+      let viy = this.ySpeed;
+      let vix2 = ball.getXspeed();
+      let viy2 = ball.getYspeed();
+      // tslint:disable-next-line: max-line-length
+      this.xSpeed = (this.size - ball.getSize()) / (this.size + ball.getSize()) * vix + (2 * ball.getSize()) / (this.size + ball.getSize()) * vix2;
+      // tslint:disable-next-line: max-line-length
+      this.ySpeed = (this.size - ball.getSize()) / (this.size + ball.getSize()) * viy + (2 * ball.getSize()) / (this.size + ball.getSize()) * viy2;
+      // tslint:disable-next-line: max-line-length
+      ball.xSpeed = (ball.size - this.size) / (ball.size + this.size) * vix2 + (2 * this.size) / (this.size + ball.size) * vix;
+      // tslint:disable-next-line: max-line-length
+      ball.ySpeed = (ball.size - this.size) / (ball.size + this.size) * viy2 + (2 * this.size) / (this.size + ball.size) * viy;
+    }
+  }
   public distFromMouse(): number {
     return dist(this.x, this.y, mouseX, mouseY);
   }
@@ -60,6 +99,7 @@ export class Ball {
   }
   /* This border behavior implements a bounce */
   public doBorderBehavior() {
+    this.audio.play();
     if (this.x < this.size / 2) {
       this.x = this.size / 2;
       this.xSpeed = -this.xSpeed;
