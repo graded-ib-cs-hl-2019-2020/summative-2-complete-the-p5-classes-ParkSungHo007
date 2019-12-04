@@ -3,13 +3,42 @@ export class Bubble {
     private x: number;
     private y: number;
     private size: number;
-    private xSpeed: number;
-    private ySpeed: number;
+    private xSpeed: number = random(-1.5, 1.5);
+    private ySpeed: number = random(-1.5, 1.5);
     private stopped: boolean = false;
-    private color: string;
+    private color: string = "#ffffffcc"; // translucent bubbles
     private borderColor: string;
+    // tslint:disable-next-line: one-line;annoying problem solved
+    // tslint:disable-next-line: max-line-length
+    constructor(x: number, y: number, size: number, borderColor: string) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.borderColor = borderColor;
+    }
+    public getStop(): boolean {
+        return this.stopped;
+    }
+    public getXspeed(): number {
+        return this.xSpeed;
+    }
+    public getYspeed(): number {
+        return this.ySpeed;
+    }
+    public setXspeed(c: number): void {
+        this.xSpeed = c;
+    }
+    public setYspeed(c: number): void {
+        this.ySpeed = c;
+    }
+    public setCol(c: string) { this.color = c; }
 
-    /* TODO REQUIRED - What's missing here? Add it! */
+    public getX(): number {
+        return this.x;
+    }
+    public getY() {
+        return this.y;
+    }
 
     public stop() {
         this.stopped = true;
@@ -20,18 +49,22 @@ export class Bubble {
     }
 
     public draw(): void {
-        /* TODO REQUIRED - draw the bubbles */
+        fill(this.color);
+        stroke(this.borderColor);
+        ellipse(this.x, this.y, this.size);
     }
 
     public move(): void {
-        /* TODO REQUIRED - Make the bubbles move as long as they aren't stopped. Model after ball behavior. */
-        /* The doBorderBehavior is built in for you below. */
+        if (!this.stopped) {
+            this.x = this.xSpeed + this.x;
+            this.y = this.ySpeed + this.y;
+            this.doBorderBehavior();
+        }
     }
 
     public distFromMouse(): number {
         return dist(this.x, this.y, mouseX, mouseY);
     }
-
     /* This border behavior implements a wrap, so bubbles will flip over to the other side */
     private doBorderBehavior() {
         if (this.x < -this.size / 2) {
@@ -46,4 +79,3 @@ export class Bubble {
         }
     }
 }
-

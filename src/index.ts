@@ -1,70 +1,127 @@
-/* Programming Summative 2
 
-    This summative comes in 2 parts.
-
-    Part 1 - Programming
-    ---------------------
-    Your PRIMARY goal is to get the program running. You can find missing elements by looking for comments marked
-    TODO REQUIRED. If they are all fixed, the program should run with 10 red balls, 10 white snowflakes, and
-    10 transluscent bubbles.
-
-    Your SECONDARY goal is to implement the optional TODO requirements and any other fun things you think of.
-
-    Part 2 - Documenting
-    ------------------------
-    Create UML diagrams for all three of these classes, and a flowchart that shows the basic program flow of
-    index.ts. You can do these by hand (be neat!) or using an online tool - draw.io and lucidchart are both nice
-    online offerings.
-
-    For a Proficient, the documentation must be complete and the program must run and be readable.
-        An Approaching might mean incomplete documentation OR hard-to-read code OR not-quite-working code
-        Work your way downwrd from there
-    For an Accomplished , some optional requirements or embellishments are required or the code must be particularly beautiful
-    For an Exemplary, I would expect all optional rquirements to be implemented, or additional features of similar or greter
-        difficulty.
-*/
 import { Ball } from "./modules/ball.js";
 import { Bubble } from "./modules/bubble.js";
+import { Particle } from "./modules/particle.js";
+import { Rocket } from "./modules/rocket.js";
 import { Snowflake } from "./modules/snowflakes.js";
-
+let rockets: Rocket[] = [];
+let particles: Particle[] = [];
 let balls: Ball[] = [];
 let snowflakes: Snowflake[] = [];
 let bubbles: Bubble[] = [];
 let clickedIndex = -1;
+let target: Bubble;
+let targetIndex: number;
+let missilestarget: Bubble;
+let stop: boolean = false;
+let rocket;
+let audio = document.getElementById("gojaEffect") as HTMLAudioElement;
+let no = 0;
 
 function setup() {
+    let numRockets = 1;
     let numBubbles = 10;
     let numBalls = 10;
     let numFlakes = 10;
-    createCanvas(500, 500);
-    for (/* TODO REQUIRED - fill this in*/) {
-        balls[i] = new Ball(random(25, width - 25), random(25, height - 25), random(10, 50));
-        /* TODO OPTIONAL - make the balls a random color */
+    let numParticle = 20;
+    Rocket.loadRocket();
+    createCanvas(1500, 800);
+    for (let i = 0; i < numRockets; i++) {
+        rockets[i] = new Rocket();
     }
-    for (/* TODO REQUIRED  - fill this in*/) {
-        /* TODO REQUIRED - add the bubbles */
+    for (let i = 0; i < numBalls; i++) {
+        balls[i] = new Ball(random(25, width - 25), random(25, height - 25), random(10, 50), getCol());
     }
-    for (/* TODO REQUIRED */) {
-        /* TODO REQUIRED - add the snowflakes */
+    for (let i = 0; i < numBubbles; i++) {
+        bubbles[i] = new Bubble(random(25, width - 25), random(25, height - 25), random(10, 50), getCol());
     }
+    for (let i = 0; i < numFlakes; i++) {
+        snowflakes[i] = new Snowflake(random(25, width - 25), random(25, height - 25), random(10, 50));
+    }
+    targetIndex = Math.floor(random(0, numBubbles));
+    target = bubbles[targetIndex];
+    target.setCol("red");
+    target.setXspeed(4);
+    target.setYspeed(4);
 }
-
+function getCol(): string {// color id is 6 letters with # in front.
+    // There are 16 letters possible for all the different possibilites 0 ~ 9 and A~ F
+    let letters = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+    let colSymbol = "#"; for (let i = 0; i < 6; i++) {
+        colSymbol = colSymbol + letters[Math.floor(Math.random() * 16)];
+    }
+    return colSymbol;
+}
 function draw() {
+    imageMode(CENTER);
     background("skyblue");
-    for (/* TODO REQUIRED*/) {
+    for (let i = 0; i < balls.length; i++) {
         balls[i].draw();
-        balls[i].move();
+        if (balls[i].touchingMouse() && mouseIsPressed && !balls[i].stopped) {
+            balls[i].stop();
+        } else if (balls[i].touchingMouse() && mouseIsPressed && balls[i].stopped) {
+            balls[i].stopped = false;
+            balls[i].move();
+        } else {
+            balls[i].move();
+        }
     }
-    /* TODO REQUIRED - Draw and move the bubbles and flakes */
+    for (let c = 0; c < bubbles.length; c++) {
+        bubbles[c].draw();
+        bubbles[c].move();
+    }
+    for (let s = 0; s < snowflakes.length; s++) {
+        snowflakes[s].draw();
+        snowflakes[s].move();
+    }
+    for (let r = 0; r < rockets.length; r++) {
+        rockets[r].draw();
+        rockets[r].move(target.getX(), target.getY());
+        if (dist(rockets[r].position.x, rockets[r].position.y, target.getX(), target.getY()) <= 40) {
+            audio.play();
+            for (let i = 0; i < 20; i++) {
+                angleMode(DEGREES);
+                // tslint:disable-next-line: max-line-length
+                particles[i] = new Particle((target.getX() + (6 * sin(18 * i))), (target.getY() + (6 * cos(18 * i))), 5, 5);
+            }
+            rockets.splice(r, 1);
+            bubbles.splice(targetIndex, 1);
+        }
+    }
+    for (let i = 0; i < particles.length; i++) {
+        particles[i].draw();
+        particles[i].explode(i);
+    }
+    eCol();
 }
+function eCol(): void {
+    for (let i = 0; i < balls.length; i++) {
+        for (let n = i + 1; n < balls.length; n++) {
+            balls[i].collison(balls[n]);
+        }
+    }
 
-/* TODO OPTIONAL - add a function mousePressed() that either stops or starts objects from moving
-   if the mouse is pressed while it is touching them. So you could use this (if careful!) to stop all of the
-   objects from moving then start them back up again. The Ball class has some helper functions that will
-   help you with this, but you'll need to add them to the other classes.
-*/
-
-// do not edit the below lines
+}
+function mousePressed() {
+    if (mouseIsPressed && !stop) {
+        for (let i = 0; i < 10; i++) {
+            balls[i].stop();
+            bubbles[i].stop();
+            snowflakes[i].stop();
+            stop = true;
+        }
+    } else if (mouseIsPressed && stop) {
+        for (let i = 0; i < 10; i++) {
+            balls[i].go();
+            bubbles[i].go();
+            snowflakes[i].go();
+            balls[i].move();
+            bubbles[i].move();
+            snowflakes[i].move();
+            stop = false;
+        }
+    }
+}
 window.draw = draw;
 window.setup = setup;
 window.mousePressed = mousePressed;

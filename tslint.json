@@ -3,6 +3,7 @@
   "rules": {
     "prefer-const": false,
     "prefer-for-of": false,
-    "triple-equals": false
+    "triple-equals": false,
+    "no-console": false
   }
 }
