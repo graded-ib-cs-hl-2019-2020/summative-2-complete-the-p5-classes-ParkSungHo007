@@ -5,7 +5,7 @@ export class Rocket {
         this.acceleration = createVector();
     }
     static loadRocket() {
-        Rocket.img = loadImage("/images/rocket.png");
+        Rocket.img = loadImage("../images/rocket.png");
         rectMode(CENTER);
         imageMode(CENTER);
     }
