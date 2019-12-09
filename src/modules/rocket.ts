@@ -2,7 +2,7 @@ import { Image } from "p5";
 
 export class Rocket {
     public static loadRocket(): void {
-        Rocket.img = loadImage("../images/rocket.png");
+        Rocket.img = loadImage("images/rocket.png");
         rectMode(CENTER);
         imageMode(CENTER);
     }
